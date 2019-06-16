@@ -14,7 +14,7 @@ After cloning the repo, navigate there from the command-line:
 cd ~/Desktop/robo-advisor
 Use your text editor or the command-line to create a new sub-directory called "app" with a file called "robo_advisor.py", and then place the following contents inside:
 
-## app/robo_advisor.py
+app/robo_advisor.py
 
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
@@ -34,7 +34,7 @@ print("HAPPY INVESTING!")
 print("-------------------------")
 Make sure to save Python files like this whenever you're done editing them. After setting up a virtual environment, we will be ready to run this file.
 
-##Use your text editor or the command-line to create a new file called "requirements.txt", and then place the following contents inside:
+Use your text editor or the command-line to create a new file called "requirements.txt", and then place the following contents inside:
 
 requests
 python-dotenv
