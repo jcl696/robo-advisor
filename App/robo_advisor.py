@@ -4,8 +4,16 @@
 
 # Essentially what we want at the end, below
 
+#KEEP MODULES BEFORE PACKAGES
+
+#TODO - BRING IN THE CSV MODULE AND START WRITING 
+
+import csv
+import json
+import os
+
 import requests
-import json 
+
 
 requests_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
 
@@ -58,7 +66,16 @@ def to_usd(my_price): #reference an int or flaot with to_usd to get the dollar s
     return "${0:,.2f}".format(my_price)
 
 
+csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
+#csv_file_path = "app/prices.csv" # a relative filepath
 
+with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer.writeheader() # uses fieldnames set above
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
 
 
 
@@ -76,6 +93,8 @@ print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON: TODO")
+print("-------------------------")
+print(f"WRITE DATA TO CSV: {csv_file_path}")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
