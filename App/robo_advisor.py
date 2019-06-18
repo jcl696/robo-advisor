@@ -11,11 +11,17 @@
 import csv
 import json
 import os
+from dotenv import load_dotenv
 
 import requests
 
+load_dotenv()
 
-requests_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
+
+stock_choice = "MSFT" #input("What stock would you like to have analyzed today? ")
+API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY")
+
+requests_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_choice}&apikey={API_KEY}"
 
 response = requests.get(requests_url)
  
