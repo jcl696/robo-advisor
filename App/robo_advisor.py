@@ -46,7 +46,7 @@ last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 #formatted_last_refreshed = datetime.datetime.strptime(last_refreshed, "%Y-%m-%d %H:%M:%S")
 
 
-breakpoint()
+#breakpoint()
 
 tsd = parsed_response["Time Series (Daily)"]
 dates = list(tsd.keys()) # TODO - SORT: assumes latest day is first to make sure the latest day is first
