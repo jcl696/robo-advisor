@@ -43,8 +43,6 @@ while True:
 parsed_response = json.loads(response.text)
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-#formatted_last_refreshed = datetime.datetime.strptime(last_refreshed, "%Y-%m-%d %H:%M:%S")
-
 
 #breakpoint()
 
