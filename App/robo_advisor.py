@@ -40,25 +40,24 @@ while True:
         break 
 
 
-
-
-
-
-
 parsed_response = json.loads(response.text)
-
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
+#formatted_last_refreshed = datetime.datetime.strptime(last_refreshed, "%Y-%m-%d %H:%M:%S")
 
 
+breakpoint()
 
 tsd = parsed_response["Time Series (Daily)"]
-
 dates = list(tsd.keys()) # TODO - SORT: assumes latest day is first to make sure the latest day is first
 
 #dates.sort()
 
-latest_day = dates[0]  # > 2019-06-17
+sorted_dates = sorted(dates, reverse=True) #reverse=True in sorted function gives you control over sorting
+
+
+latest_day = sorted_dates[0]  # > 2019-06-17
+
 
 #print(tsd)
 
@@ -75,19 +74,24 @@ latest_close = tsd[latest_day]["4. close"]
 
 high_prices = []
 low_prices = []
+close_prices = []
+volumes = []
 
 for date in dates: 
     high_price = tsd[date]["2. high"] 
     high_prices.append(float(high_price))
     low_price = tsd[date]["3. low"]
     low_prices.append(float(low_price))
+    close_price = tsd[date]["4. close"]
+    close_prices.append(float(close_price))
+    volume = tsd[date]["5. volume"]
+    volumes.append(int(volume))
 
 recent_high = max(high_prices)
-
 recent_low = min(low_prices)
-
-#breakpoint()
-
+avg_volume = int(sum(volumes) / len(volumes))
+avg_close = sum(close_prices) / len(close_prices)
+latest_volume = int(tsd[latest_day]["5. volume"])
 
 
 def to_usd(my_price): #reference an int or flaot with to_usd' to get the dollar sign and correct decimals
@@ -130,13 +134,23 @@ print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUEST AT: {right_now}")  
 print("-------------------------")
-print(f"LATEST DAY: {last_refreshed}")
+print(f"MARKET DATA LAST REFRESHED: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!") 
-print("RECOMMENDATION REASON: TODO")
+
+if avg_volume > (latest_volume):
+    print("RECOMMENDATION: BUY!") 
+    print("RECOMMENDATION REASON: The latest volume is less than the recent average volume, because of this it will be more likely that you will get to buy the stock at the price you want.")
+
+else:
+    print("RECOMMENDATION: SELL!")
+    print("RECOMMENDATION REASON: Since there is more volume in the market, there is more liquidity and you can sell your stock easier, hopefully for a gain!")
+
+
+
+
 print("-------------------------")
 print(f"WRITE DATA TO CSV: {csv_file_path}")
 print("-------------------------")
@@ -144,3 +158,4 @@ print("HAPPY INVESTING!")
 print("-------------------------")
 
 
+ 

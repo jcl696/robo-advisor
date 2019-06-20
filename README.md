@@ -53,3 +53,4 @@ pip install pytest # (only if you'll be writing tests)
 From within the virtual environment, demonstrate your ability to run the Python script from the command-line:
 
 python robo_advisor.py
+
