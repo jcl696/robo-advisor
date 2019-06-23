@@ -97,7 +97,7 @@ def to_usd(my_price): #reference an int or flaot with to_usd' to get the dollar 
 
 
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
-#csv_file_path = "app/prices.csv" # a relative filepath
+#csv_file_path = "os.path.join(os.path.dirname(__file__), data/prices.csv" # a relative filepath
 
 csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
@@ -114,20 +114,14 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
         "low": daily_prices["3. low"], 
         "close": daily_prices["4. close"], 
         "volume": daily_prices["5. volume"]})
-    
-    
-    #
-    #writer.writerow({"city": "New York", "name": "Mets"})
-    #writer.writerow({"city": "Boston", "name": "Red Sox"})
-    #writer.writerow({"city": "New Haven", "name": "Ravens"})
-#
+
 
 now = datetime.datetime.now()
 right_now = (now.strftime("%Y-%m-%d %H:%M:%S %p"))
 
 
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print(f"SELECTED SYMBOL: {stock_choice}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUEST AT: {right_now}")  
@@ -138,15 +132,13 @@ print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
 
-if avg_volume > (latest_volume):
+if int(avg_close) > int(recent_low):
     print("RECOMMENDATION: BUY!") 
-    print("RECOMMENDATION REASON: The latest volume is less than the recent average volume, because of this it will be more likely that you will get to buy the stock at the price you want.")
+    print("RECOMMENDATION REASON: The average close is greater than the recent_low. This means the stock is currently undervalued compared to its historical average and a good chance to buy.")
 
 else:
     print("RECOMMENDATION: SELL!")
-    print("RECOMMENDATION REASON: Since there is more volume in the market, there is more liquidity and you can sell your stock easier, hopefully for a gain!")
-
-
+    print("RECOMMENDATION REASON: The average close is less than the recent_low. This means that the stock is currently overvalued compared to its historical average and isn't worth buying at this price.")
 
 
 print("-------------------------")
